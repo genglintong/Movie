@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Word;
+using Aspose.Words;
 using LogLib;
 
 namespace Movie
@@ -14,20 +14,18 @@ namespace Movie
         public static String readWord(String local)
         {
             StringBuilder sb = new StringBuilder();
-            Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
+            //Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
             Document doc = null;
+
             object unknow = System.Reflection.Missing.Value;
             Console.WriteLine("test");
-            object[] oBookMark = new object[5];
+            String[] oBookMark = new string[5];
 
             String[] Loc = local.Split('_');
             String pai = Loc[0];
             String hao = Loc[1];
             String movieName = ConfigurationManager.AppSettings["movieName"];
             String savePath = ConfigurationManager.AppSettings["savePath"];
-
-
-            
 
             //赋值书签名
             oBookMark[0] = "movieName";
@@ -38,8 +36,25 @@ namespace Movie
 
             try
             {
-                doc = wordApp.Documents.Open("D://test//test.doc");
-                int paragraphsCount = doc.Paragraphs.Count;
+                //doc = wordApp.Documents.Open("D://test//test.doc");
+                doc = new Aspose.Words.Document("test.doc");
+                DocumentBuilder bulider = new DocumentBuilder(doc);
+
+                bulider.MoveToBookmark(oBookMark[0]);
+                bulider.Write(movieName);
+                bulider.MoveToBookmark(oBookMark[1]);
+                bulider.Write(pai);
+                bulider.MoveToBookmark(oBookMark[2]);
+                bulider.Write(pai);
+                bulider.MoveToBookmark(oBookMark[3]);
+                bulider.Write(hao);
+                bulider.MoveToBookmark(oBookMark[4]);
+                bulider.Write(hao);
+
+                doc.Save(savePath);
+                TraceHelper.GetInstance().Info("已保存至" + savePath, "WordRW Function");
+
+                /*int paragraphsCount = doc.Paragraphs.Count;
 
                 doc.Bookmarks.get_Item(ref oBookMark[0]).Range.Text = movieName;
                 doc.Bookmarks.get_Item(ref oBookMark[1]).Range.Text = pai;
@@ -52,11 +67,11 @@ namespace Movie
 
                 doc.Close(ref unknow, ref unknow, ref unknow);
                 wordApp.Documents.Save(ref unknow, ref unknow);
-                wordApp.Quit(ref unknow, ref unknow, ref unknow);
+                wordApp.Quit(ref unknow, ref unknow, ref unknow);*/
             }
             catch
             {
-
+                TraceHelper.GetInstance().Error("发生错误", "WordRW Function");
             }
             //Console.WriteLine( sb.ToString());
             return "";
