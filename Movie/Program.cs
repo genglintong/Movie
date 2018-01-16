@@ -16,9 +16,18 @@ namespace Movie
         static void Main()
         {
             TraceHelper.GetInstance().Info("程序开始...", "Main Function");
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            Form config = new Form2();
+
+            config.ShowDialog();
+
+            if(config.DialogResult == DialogResult.OK)
+            {
+                Application.Run(new Form1());
+            }
         }
     }
 }
