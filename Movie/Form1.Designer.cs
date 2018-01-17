@@ -494,6 +494,7 @@ namespace Movie
             this.button28.TabIndex = 26;
             this.button28.Text = "3_5";
             this.button28.UseVisualStyleBackColor = false;
+            this.button28.Click += new System.EventHandler(this.button1_Click);
             // 
             // button29
             // 
@@ -869,6 +870,7 @@ namespace Movie
             this.button57.TabIndex = 33;
             this.button57.Text = "2_7";
             this.button57.UseVisualStyleBackColor = false;
+            this.button57.Click += new System.EventHandler(this.button1_Click);
             // 
             // button58
             // 
@@ -1520,6 +1522,8 @@ namespace Movie
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(842, 575);
             this.Name = "Form1";
+            this.Text = ConfigurationManager.AppSettings["roomNum"] + "号厅";
+            this.Load += new System.EventHandler(this.Form1_Load_1);
             this.ResumeLayout(false);
             this.PerformLayout();
 
